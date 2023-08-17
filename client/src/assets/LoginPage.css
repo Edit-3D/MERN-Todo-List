@@ -1,0 +1,22 @@
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+}
+.form-container {
+  height: 70vh;
+  width: 60vw;
+  min-width: max-content;
+  min-height: 400px;
+  background-color: rgb(31, 37, 41);
+  border: 2px solid rgb(150, 150, 150);
+  border-radius: 5px;
+}
+.tab-content {
+  max-height: 90%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

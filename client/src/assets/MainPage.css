@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+#app {
+  width: 66vw;
+  justify-content: center;
+  text-align: center;
+}
+
+#topBar {
+  display: flex;
+  justify-content: space-between;
+  height: 38px;
+  width: 70%;
+  background-color: rgb(75, 75, 75);
+  align-items: center;
+  margin: 40px auto;
+  border-radius: 10px;
+}
+
+h2 {
+  display: table-cell;
+  vertical-align: middle;
+  height: 38px;
+  text-align: center;
+  color: rgb(225, 225, 225);
+  margin: 0px;
+}
+
+th {
+  border: 1px solid;
+
+  border-color: rgb(150, 150, 150);
+}
+.table .incomplete {
+  color: red;
+}
+
+.table .complete {
+  color: green;
+}
+td:hover {
+  cursor: pointer;
+}
+.deleteBox {
+  color: white;
+  border: 1px solid;
+  border-color: rgb(150, 150, 150);
+}
+.deleteBox:hover {
+  color: red;
+}
+#filterDropdown::after {
+  display: none;
+}

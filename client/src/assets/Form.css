@@ -1,0 +1,25 @@
+.title-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  text-decoration: wavy;
+  margin: 10px;
+}
+.custom-form {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+}
+.custom-input {
+  height: 40px;
+  margin-bottom: 10px;
+}
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+.custom-button {
+  width: 150px;
+}
