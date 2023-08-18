@@ -74,7 +74,7 @@ class SignupForm extends React.Component {
             <Button
               className="custom-signup-button"
               variant="link"
-              onClick={this.props.onSwitchToLogin} // Call the passed function to switch tabs
+              onClick={this.props.onSwitchToLogin}
             >
               Login!
             </Button>
