@@ -12,7 +12,7 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: "login", // Set the initial active tab
+      activeTab: "login",
     };
   }
 

@@ -8,6 +8,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AddTodo from "../utilities/Modal";
 
+import TodoService from "../services/todoService";
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
@@ -17,15 +18,17 @@ class TodoList extends React.Component {
       filter: "All",
     };
   }
-  handleAddTodo = (newTodoItem) => {
-    this.setState((prevState) => {
-      const updatedTodoList = prevState.todoList.concat(newTodoItem);
-
-      return {
-        todoList: updatedTodoList,
-      };
-    });
+  handleAddTodo = async (newTodoItem) => {
+    try {
+      const addedTodo = await TodoService.createUser(newTodoItem);
+      this.setState((prevState) => ({
+        todoList: [...prevState.todoList, addedTodo],
+      }));
+    } catch (error) {
+      console.error("Error adding todo:", error);
+    }
   };
+
   handleFilterChange = (e) => {
     this.setState({ filter: e });
   };
