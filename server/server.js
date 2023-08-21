@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 //Routes
-var usersRoute = require("./Routes/users");
+//var usersRoute = require("./Routes/users");
 var todosRoute = require("./Routes/todos");
 
 //Connect to MongoDB
@@ -29,7 +29,7 @@ app.get("/api", function (req, res) {
 });
 
 //Importing the Routes
-app.use(usersRoute);
+//app.use(usersRoute);
 app.use(todosRoute);
 
 app.listen(PORT, () => {

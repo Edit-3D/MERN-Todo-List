@@ -2,6 +2,15 @@ const express = require("express");
 const router = express.Router();
 const Todo = require("../models/todo");
 
+router.get("/api/todos", async (req, res) => {
+  try {
+    const todos = await Todo.find();
+    res.json(todos);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching todos" });
+  }
+});
+
 router.post("/api/todos", async function (req, res, next) {
   try {
     const todo = new Todo(req.body);
@@ -11,12 +20,32 @@ router.post("/api/todos", async function (req, res, next) {
     return next(error);
   }
 });
-router.get("/api/todos", async (req, res) => {
+
+router.delete("/api/todos/:id", async (req, res, next) => {
+  const id = req.params.id;
   try {
-    const todos = await Todo.find();
-    res.json(todos);
+    const todo = await Todo.findOneAndDelete({ id: id });
+    if (!todo) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+    res.status(200).json(todo);
   } catch (error) {
-    res.status(500).json({ error: "Error fetching todos" });
+    next(error);
+  }
+});
+
+router.put("/api/todos/:id", async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const updatedTodo = await Todo.findOneAndUpdate({ id: id }, req.body, {
+      new: true,
+    });
+    if (!updatedTodo) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+    res.status(200).json(updatedTodo);
+  } catch (error) {
+    next(error);
   }
 });
 

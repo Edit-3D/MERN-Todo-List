@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+/* var mongoose = require("mongoose");
 
 userSchema = new mongoose.Schema({
   name: { type: String },
@@ -8,3 +8,4 @@ userSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("user", userSchema);
+ */

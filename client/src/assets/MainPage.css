@@ -31,7 +31,8 @@ h2 {
   margin: 0px;
 }
 
-th {
+th,
+tbody {
   border: 1px solid;
 
   border-color: rgb(150, 150, 150);
@@ -45,6 +46,9 @@ th {
 }
 td:hover {
   cursor: pointer;
+}
+.custom-table {
+  background-color: red;
 }
 .deleteBox {
   color: white;

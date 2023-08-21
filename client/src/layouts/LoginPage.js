@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -13,6 +13,7 @@ class LoginPage extends React.Component {
     super(props);
     this.state = {
       activeTab: "login",
+      newUser: null,
     };
   }
 
@@ -20,8 +21,12 @@ class LoginPage extends React.Component {
     this.setState({ activeTab: tabKey });
   };
 
+  handleUserCreated = (newUser) => {
+    this.setState({ newUser });
+  };
+
   render() {
-    const { activeTab } = this.state;
+    const { activeTab, newUser } = this.state;
 
     return (
       <div className="app">
@@ -35,6 +40,8 @@ class LoginPage extends React.Component {
             <Tab eventKey="signup" title="Signup">
               <SignupForm
                 onSwitchToLogin={() => this.handleTabChange("login")}
+                newUser={newUser}
+                onUserCreated={this.handleUserCreated}
               />
             </Tab>
           </Tabs>
@@ -45,3 +52,4 @@ class LoginPage extends React.Component {
 }
 
 export default LoginPage;
+ */

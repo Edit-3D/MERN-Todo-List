@@ -1,9 +1,10 @@
-import React from "react";
+/* import React from "react";
 import { Button, FormGroup, Form } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "../assets/Form.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import UserService from "../services/userService";
 
 class SignupForm extends React.Component {
   constructor(props) {
@@ -19,6 +20,40 @@ class SignupForm extends React.Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+  handleCreateUser = async () => {
+    if (
+      this.state.newUname.trim() === "" ||
+      this.state.newPword.trim() === "" ||
+      this.state.newEmail.trim() === "" ||
+      this.state.newName.trim() === ""
+    ) {
+      return;
+    }
+
+    const newUser = {
+      name: this.state.newName,
+      email: this.state.newEmail,
+      username: this.state.newUname,
+      password: this.state.newPword,
+    };
+
+    try {
+      const createdUser = await UserService.createUser(newUser);
+      this.setState({
+        newUname: "",
+        newPword: "",
+        newEmail: "",
+        newName: "",
+      });
+
+      // Call the onUserCreated callback from props to notify the parent component
+      if (this.props.onUserCreated) {
+        this.props.onUserCreated(createdUser);
+      }
+    } catch (error) {
+      console.error("Error adding User:", error);
+    }
+  };
   render() {
     const { newUname, newPword, newEmail, newName } = this.state;
     return (
@@ -26,6 +61,11 @@ class SignupForm extends React.Component {
         <div class="title-container">
           <h2 class="title-text">Create an Account!</h2>
         </div>
+        {this.props.newUser && (
+          <p className="success-message">
+            User {this.props.newUser.username} created successfully!
+          </p>
+        )}
         <Form className="custom-form">
           <FormGroup>
             <Form.Label>Name</Form.Label>
@@ -53,6 +93,7 @@ class SignupForm extends React.Component {
             <Form.Label>Username</Form.Label>
             <Form.Control
               className="custom-input"
+              name="newUname"
               type="text"
               placeholder="Enter a Username"
               value={newUname}
@@ -63,6 +104,7 @@ class SignupForm extends React.Component {
             <Form.Label>Password</Form.Label>
             <Form.Control
               className="custom-input"
+              name="newPword"
               type="password"
               placeholder="Enter a Password"
               value={newPword}
@@ -81,7 +123,12 @@ class SignupForm extends React.Component {
           </div>
           <div class="button-container">
             {" "}
-            <Button className="custom-button" variant="primary" type="submit">
+            <Button
+              className="custom-button"
+              variant="primary"
+              type="submit"
+              onClick={this.handleCreateUser}
+            >
               Create
             </Button>
           </div>
@@ -92,3 +139,4 @@ class SignupForm extends React.Component {
 }
 
 export default SignupForm;
+ */
