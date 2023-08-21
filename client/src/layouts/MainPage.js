@@ -1,14 +1,14 @@
 import React from "react";
 
-import { Button, Badge, Dropdown, Table } from "react-bootstrap";
+import { Button, Badge, Dropdown } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "../assets/MainPage.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import AddTodo from "../utilities/Modal";
-
 import TodoService from "../services/todoService";
+
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
@@ -18,9 +18,9 @@ class TodoList extends React.Component {
       filter: "All",
     };
   }
-  handleAddTodo = async (newTodoItem) => {
+  handleCreateTodo = async (newTodoItem) => {
     try {
-      const addedTodo = await TodoService.createUser(newTodoItem);
+      const addedTodo = await TodoService.createTodo(newTodoItem);
       this.setState((prevState) => ({
         todoList: [...prevState.todoList, addedTodo],
       }));
@@ -28,37 +28,51 @@ class TodoList extends React.Component {
       console.error("Error adding todo:", error);
     }
   };
+  handleDeleteTodo = async (id) => {
+    try {
+      await TodoService.deleteTodo(id);
+      this.setState((prevState) => ({
+        todoList: prevState.todoList.filter((todo) => todo.id !== id),
+      }));
+    } catch (error) {
+      console.error("Error deleting todo:", error);
+    }
+  };
+  handleUpdateTodo = async (id, currentStatus) => {
+    try {
+      const newStatus =
+        currentStatus === "Complete" ? "Incomplete" : "Complete";
+      const updatedTodo = await TodoService.updateTodo(id, {
+        status: newStatus,
+      });
+      this.setState((prevState) => ({
+        todoList: prevState.todoList.map((todo) => {
+          if (todo.id === id) {
+            return {
+              ...todo,
+              status: updatedTodo.status,
+            };
+          }
+          return todo;
+        }),
+      }));
+      console.log("Status updated successfully!");
+    } catch (error) {
+      console.error("Error updating todo:", error);
+    }
+  };
+
+  async componentDidMount() {
+    try {
+      const todos = await TodoService.getTodos();
+      this.setState({ todoList: todos });
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+    }
+  }
 
   handleFilterChange = (e) => {
     this.setState({ filter: e });
-  };
-  handleStatusChange = (id) => {
-    this.setState((prevState) => {
-      const updatedTodoList = prevState.todoList.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            status: todo.status === "Incomplete" ? "Complete" : "Incomplete",
-          };
-        }
-        return todo;
-      });
-
-      return {
-        todoList: updatedTodoList,
-      };
-    });
-  };
-  handleDeleteTodo = (id) => {
-    this.setState((prevState) => {
-      const updatedTodoList = prevState.todoList.filter(
-        (todo) => todo.id !== id
-      );
-
-      return {
-        todoList: updatedTodoList,
-      };
-    });
   };
 
   toggleModal = () => {
@@ -118,13 +132,16 @@ class TodoList extends React.Component {
         </div>
         <div id="todoTable">
           {}
-          <Table striped hover variant="dark" style={{ width: "100%" }}>
+          <table
+            class="table table-dark table-striped table-hover"
+            style={{ width: "100%" }}
+          >
             <thead>
               <tr>
-                <th style={{ width: "5%" }}>Id </th>
                 <th style={{ width: "60%" }}>ToDo Name</th>
                 <th style={{ width: "10%" }}>Priority</th>
                 <th style={{ width: "25%" }}>Status</th>
+                <th style={{ width: "10%" }}>DELETE</th>
               </tr>
             </thead>
 
@@ -137,16 +154,7 @@ class TodoList extends React.Component {
                 )
                 .map((filteredTodo) => (
                   <tr key={filteredTodo.id}>
-                    <td
-                      onClick={() => this.handleStatusChange(filteredTodo.id)}
-                    >
-                      {filteredTodo.id}
-                    </td>
-                    <td
-                      onClick={() => this.handleStatusChange(filteredTodo.id)}
-                    >
-                      {filteredTodo.text}
-                    </td>
+                    <td>{filteredTodo.text}</td>
                     <td>
                       <Badge
                         pill
@@ -169,7 +177,12 @@ class TodoList extends React.Component {
                           ? "incomplete"
                           : "complete"
                       }
-                      onClick={() => this.handleStatusChange(filteredTodo.id)}
+                      onClick={() =>
+                        this.handleUpdateTodo(
+                          filteredTodo.id,
+                          filteredTodo.status
+                        )
+                      }
                     >
                       {filteredTodo.status}
                     </td>
@@ -183,13 +196,13 @@ class TodoList extends React.Component {
                   </tr>
                 ))}
             </tbody>
-          </Table>
+          </table>
         </div>
         <div id="modalContainer">
           <AddTodo
             show={show}
             onClose={this.toggleModal}
-            onAdd={this.handleAddTodo}
+            onAdd={this.handleCreateTodo}
           />
         </div>
       </div>

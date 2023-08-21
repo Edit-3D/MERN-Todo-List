@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { Button, FormGroup, Form } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -71,3 +71,4 @@ class LoginForm extends React.Component {
 }
 
 export default LoginForm;
+ */

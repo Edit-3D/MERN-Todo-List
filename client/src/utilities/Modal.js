@@ -11,7 +11,6 @@ class AddTodo extends React.Component {
     this.state = {
       newTodo: "",
       selectedPriority: "",
-      idNum: 1,
     };
   }
 
@@ -31,14 +30,13 @@ class AddTodo extends React.Component {
       return;
 
     const newTodoItem = {
-      id: this.state.idNum,
+      id: Date.now(),
       text: this.state.newTodo,
       priority: this.state.selectedPriority,
       status: "Incomplete",
     };
 
     this.setState((prevState) => ({
-      idNum: ++prevState.idNum,
       newTodo: "",
       selectedPriority: "",
     }));
