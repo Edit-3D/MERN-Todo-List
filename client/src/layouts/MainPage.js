@@ -1,10 +1,16 @@
 import React from "react";
 
+//React-Bootstrap
 import { Button, Badge, Dropdown } from "react-bootstrap";
 
+//Bootstrap
 import "bootstrap/dist/css/bootstrap.css";
 import "../assets/MainPage.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+
+//Toastify
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import AddTodo from "../utilities/Modal";
 import TodoService from "../services/todoService";
@@ -24,21 +30,25 @@ class TodoList extends React.Component {
       this.setState((prevState) => ({
         todoList: [...prevState.todoList, addedTodo],
       }));
+      toast.success(`${addedTodo.text} added successfully!`);
     } catch (error) {
       console.error("Error adding todo:", error);
+      toast.error(" Error adding Todo. Please try again.");
     }
   };
-  handleDeleteTodo = async (id) => {
+  handleDeleteTodo = async (id, text) => {
     try {
       await TodoService.deleteTodo(id);
       this.setState((prevState) => ({
         todoList: prevState.todoList.filter((todo) => todo.id !== id),
       }));
+      toast.success(`${text} deleted successfully!`);
     } catch (error) {
       console.error("Error deleting todo:", error);
+      toast.error("Error deleting Todo. Please try again.");
     }
   };
-  handleUpdateTodo = async (id, currentStatus) => {
+  handleUpdateTodo = async (id, text, currentStatus) => {
     try {
       const newStatus =
         currentStatus === "Complete" ? "Incomplete" : "Complete";
@@ -56,9 +66,10 @@ class TodoList extends React.Component {
           return todo;
         }),
       }));
-      console.log("Status updated successfully!");
+      toast.success(`${text} updated successfully!`);
     } catch (error) {
       console.error("Error updating todo:", error);
+      toast.error("Error updating Todo. Please try again.");
     }
   };
 
@@ -180,6 +191,7 @@ class TodoList extends React.Component {
                       onClick={() =>
                         this.handleUpdateTodo(
                           filteredTodo.id,
+                          filteredTodo.text,
                           filteredTodo.status
                         )
                       }
@@ -188,7 +200,12 @@ class TodoList extends React.Component {
                     </td>
                     <td
                       class="deleteBox"
-                      onClick={() => this.handleDeleteTodo(filteredTodo.id)}
+                      onClick={() =>
+                        this.handleDeleteTodo(
+                          filteredTodo.id,
+                          filteredTodo.text
+                        )
+                      }
                     >
                       x
                     </td>{" "}
@@ -203,6 +220,16 @@ class TodoList extends React.Component {
             show={show}
             onClose={this.toggleModal}
             onAdd={this.handleCreateTodo}
+          />
+        </div>
+        <div id="toastContainer">
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={true}
+            pauseOnHover
+            theme="dark"
+            enablEhtml
           />
         </div>
       </div>
