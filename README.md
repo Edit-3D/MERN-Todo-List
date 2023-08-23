@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-The version numbers in brackets indicate the tested versions. The web app should still work with newer version. S
+The version numbers in brackets indicate the tested versions. The web app should still work with newer versions.
 
 - [Node.js](https://nodejs.org/en/download/) (v18.16)
 - [MongoDB](https://www.mongodb.com/download-center/community?jmp=nav) (v4.4): must be running locally on port 27017 (Required if using localhost)
